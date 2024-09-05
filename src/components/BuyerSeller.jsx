@@ -4,8 +4,8 @@ import { styled } from "@mui/system";
 
 // Define custom styles
 const MarketData = styled(Box)(({ theme }) => ({
-    backgroundColor: "#412601",
-    borderRadius: "8px",
+    backgroundColor: "#D8BE70",
+    borderRadius: "35px",
     padding: theme.spacing(2),
 }));
 
@@ -26,28 +26,28 @@ const MarketDataBar = styled(Box)({
 
 const BuyersBar = styled(Box)({
     height: "100%",
-    backgroundColor: "#00FF00",
+    backgroundColor: "green",
 });
 
 const SellersBar = styled(Box)({
     height: "100%",
-    backgroundColor: "#FF0000",
+    backgroundColor: "red",
 });
 
 const BuyerSeller = () => {
     return (
         <MarketData
-            className="bg-white p-4 rounded-lg shadow-md"
-            sx={{ marginTop: "40px" }}
+            className="p-4 rounded-lg shadow-md"
+            sx={{ marginTop: "20px" }}
         >
             <MarketDataRow className="mb-2">
-                <Typography variant="body2" color="#FFF">
+                <Typography variant="body2" color="#412601" fontWeight="bold">
                     BUYERS
                 </Typography>
-                <Typography variant="body2" style={{ color: "#00FF00" }}>
+                <Typography variant="body2" style={{ color: "green", fontWeight: '600' }}>
                     0.080%
                 </Typography>
-                <Typography variant="body2" color="#FFF">
+                <Typography variant="body2" color="#412601" fontWeight="bold">
                     SELLER
                 </Typography>
             </MarketDataRow>
@@ -56,10 +56,10 @@ const BuyerSeller = () => {
                 <SellersBar style={{ width: "19%" }} />
             </MarketDataBar>
             <MarketDataRow>
-                <Typography variant="body2" color="#FFF">
+                <Typography variant="body2" color="#412601" fontWeight="bold">
                     81%
                 </Typography>
-                <Typography variant="body2" color="#FFF">
+                <Typography variant="body2" color="#412601" fontWeight="bold">
                     19%
                 </Typography>
             </MarketDataRow>

@@ -1,12 +1,14 @@
 body {
-  background-color: #603F26;
+  /* background-color: #FFFFFF; */
+  background-image: url('/background.jpg');
+  background-size: cover;
+  height: 100vh;
 }
 
 #root {
   margin: 0 auto;
   text-align: center;
 }
-
 
 @keyframes logo-spin {
   from {
@@ -31,7 +33,6 @@ body {
 .read-the-docs {
   color: #888;
 }
-
 
 /* DeviceRestriction.css */
 

@@ -5,7 +5,7 @@ import SpotRate from "../components/SpotRate";
 import CommodityTable from "../components/CommodityTable";
 import NewsTicker from "../components/News";
 import logo from "../assets/logo.png";
-import aurifyLogo from "../assets/aurifyLogo.png";
+import aurifyLogo from "../assets/icon-white.png";
 import BuyerSeller from "../components/BuyerSeller";
 import {
   fetchSpotRates,
@@ -82,7 +82,7 @@ function TvScreen() {
     // Fetch TV screen data (you can leave this as a separate call)
     fetchTVScreenData(adminId)
       .then((response) => {
-        console.log(response)
+        console.log(response);
         if (response.status === 200) {
           // Allow TV screen view
           setShowLimitModal(false);
@@ -179,27 +179,49 @@ function TvScreen() {
         alignItems="flex-start"
         justifyContent="space-between"
       >
-        {/* Left Side: DateTime + Commodity Table */}
+        {/* Side: SpotRate and Logo */}
+        <Grid item xs={12} md={5}>
+          {/* SpotRate Component */}
+          <SpotRate />
+
+          {/* Buyer Seller Component */}
+          <BuyerSeller />
+        </Grid>
+
+        {/* Side: DateTime + Commodity Table */}
         <Grid item xs={12} md={7}>
           {/* Date and Time with Background Box */}
           <Box
-            className="flex items-center justify-between bg-[#412601] rounded-lg mb-6 p-4"
+            className="flex items-center justify-between rounded-lg mb-6 p-5"
             sx={{
-              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
+              boxShadow: "0px 5px 10px rgba(200, 200, 205, 0.4)",
+              borderRadius: "35px",
             }}
           >
             <Typography
               fontWeight="bold"
-              sx={{ color: "#FFF", fontSize: "2vw" }}
+              sx={{ color: "#FFFFFF", fontSize: "2vw" }}
             >
               {dateTime.toLocaleTimeString()}
             </Typography>
-            <img src={logo} alt="Logo" className="w-24 h-24 ml-5" />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <img src={logo} alt="Logo" className="w-24 h-24 ml-5" />
+              <Typography sx={{ fontSize: "1.5vw", fontWeight: '600' }}>
+                RAKZ GOLD & DIAMOND
+              </Typography>
+            </Box>
             <Box className="flex flex-col items-center justify-between mr-8">
               <Typography
                 fontWeight="bold"
                 sx={{
-                  color: "#FFF",
+                  color: "#FFFFFF",
                   fontSize: "2vw",
                   textTransform: "uppercase",
                 }}
@@ -208,7 +230,7 @@ function TvScreen() {
               </Typography>
               <Typography
                 fontWeight="bold"
-                sx={{ color: "#FFF", fontSize: "1.5vw" }}
+                sx={{ color: "#FFFFFF", fontSize: "1.5vw" }}
               >
                 {getFormattedDate(dateTime)}
               </Typography>
@@ -219,20 +241,11 @@ function TvScreen() {
           <CommodityTable commodities={commodities} />
 
           <Box className="flex flex-col justify-center items-center">
-            <img src={aurifyLogo} alt="" className="w-60 h-18 mt-3" />
-            <Typography sx={{ fontSize: "1.5vw", marginTop: "5px" }}>
+            {/* <img src={aurifyLogo} alt="" className="w-12 h-12 mt-4" /> */}
+            <Typography sx={{ fontSize: "1.5vw", marginTop: "30px" }}>
               Powered by www.aurify.ae
             </Typography>
           </Box>
-        </Grid>
-
-        {/* Right Side: SpotRate and Logo */}
-        <Grid item xs={12} md={5}>
-          {/* SpotRate Component */}
-          <SpotRate />
-
-          {/* Buyer Seller Component */}
-          <BuyerSeller />
         </Grid>
       </Grid>
 
