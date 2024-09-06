@@ -42,7 +42,6 @@ const CommodityGrid = ({ commodities }) => {
       }}
     >
       {commodities.map((commodity, index) => {
-        console.log(commodity)
         const { bid, ask } = getBidAskValues(commodity.metal.toLowerCase());
         const {
           unit,
