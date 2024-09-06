@@ -72,7 +72,7 @@ function TvScreen() {
         // Handle News
         setNews(newsRes.data.news.news);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        // console.error("Error fetching data:", error);
         setError("An error occurred while fetching data");
       }
     };
@@ -82,7 +82,7 @@ function TvScreen() {
     // Fetch TV screen data (you can leave this as a separate call)
     fetchTVScreenData(adminId)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (response.status === 200) {
           // Allow TV screen view
           setShowLimitModal(false);
@@ -92,7 +92,7 @@ function TvScreen() {
         if (error.response && error.response.status === 403) {
           setShowLimitModal(true); // Show the modal on 403 status
         } else {
-          console.error("Error:", error.message);
+          // console.error("Error:", error.message);
           alert("An unexpected error occurred.");
         }
       });
@@ -108,12 +108,12 @@ function TvScreen() {
       });
 
       socket.on("connect", () => {
-        console.log("Connected to WebSocket server");
+        // console.log("Connected to WebSocket server");
         socket.emit("request-data", symbols);
       });
 
       socket.on("disconnect", () => {
-        console.log("Disconnected from WebSocket server");
+        // console.log("Disconnected from WebSocket server");
       });
 
       socket.on("market-data", (data) => {
@@ -137,7 +137,7 @@ function TvScreen() {
       });
 
       socket.on("error", (error) => {
-        console.error("WebSocket error:", error);
+        // console.error("WebSocket error:", error);
         setError("An error occurred while receiving data");
       });
 
@@ -213,7 +213,7 @@ function TvScreen() {
               }}
             >
               <img src={logo} alt="Logo" className="w-24 h-24 ml-5" />
-              <Typography sx={{ fontSize: "1.5vw", fontWeight: '600' }}>
+              <Typography sx={{ fontSize: "1.5vw", fontWeight: '600', color: '#D8BE70' }}>
                 RAKZ GOLD & DIAMOND
               </Typography>
             </Box>

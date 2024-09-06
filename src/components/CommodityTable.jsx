@@ -7,7 +7,7 @@ const CommodityGrid = ({ commodities }) => {
 
   // Helper function to get bid and ask values based on metal type
   const getBidAskValues = (metal) => {
-    if (metal === "gold" || metal === "gold kilobar") {
+    if (metal === "gold" || metal === "gold kilobar" || metal === "gold ten tola") {
       return {
         bid: parseFloat(goldData.bid) || 0,
         ask: parseFloat(goldData.ask) || 0,
@@ -42,6 +42,7 @@ const CommodityGrid = ({ commodities }) => {
       }}
     >
       {commodities.map((commodity, index) => {
+        console.log(commodity)
         const { bid, ask } = getBidAskValues(commodity.metal.toLowerCase());
         const {
           unit,

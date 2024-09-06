@@ -168,7 +168,7 @@ const SpotRate = () => {
           fontSize: "2vw",
           fontWeight: "bold",
           marginBottom: "2vw",
-          color: "#ffffff",
+          color: "#FFFFFF",
         }}
       >
         Spot Rate ($)
