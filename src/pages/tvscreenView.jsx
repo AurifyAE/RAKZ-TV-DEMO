@@ -5,7 +5,7 @@ import SpotRate from "../components/SpotRate";
 import CommodityTable from "../components/CommodityTable";
 import NewsTicker from "../components/News";
 import logo from "../assets/logo.png";
-import aurifyLogo from "../assets/icon-white.png";
+import Clock from "../components/Clock";
 import BuyerSeller from "../components/BuyerSeller";
 import {
   fetchSpotRates,
@@ -181,11 +181,14 @@ function TvScreen() {
       >
         {/* Side: SpotRate and Logo */}
         <Grid item xs={12} md={5}>
+          {/* World Clock */}
+          <Clock />
+
           {/* SpotRate Component */}
           <SpotRate />
 
           {/* Buyer Seller Component */}
-          <BuyerSeller />
+          {/* <BuyerSeller /> */}
         </Grid>
 
         {/* Side: DateTime + Commodity Table */}
@@ -212,8 +215,10 @@ function TvScreen() {
                 alignItems: "center",
               }}
             >
-              <img src={logo} alt="Logo" className="w-24 h-24 ml-5" />
-              <Typography sx={{ fontSize: "1.5vw", fontWeight: '600', color: '#D8BE70' }}>
+              <img src={logo} alt="Logo" className="w-28 h-28 ml-5" />
+              <Typography
+                sx={{ fontSize: "1.5vw", fontWeight: "600", color: "#D8BE70" }}
+              >
                 RAKZ GOLD & DIAMOND
               </Typography>
             </Box>

@@ -153,7 +153,7 @@ const SpotRate = () => {
 
   return (
     <Box
-      className="mx-auto rounded-lg text-center"
+      className="mx-auto rounded-lg text-center mt-5"
       sx={{
         maxWidth: "100%",
         backgroundColor: "",
@@ -161,18 +161,18 @@ const SpotRate = () => {
         color: "white",
       }}
     >
-      <Typography
+      {/* <Typography
         variant="h4"
         component="h2"
         sx={{
           fontSize: "2vw",
           fontWeight: "bold",
-          marginBottom: "2vw",
+          marginBottom: "10px",
           color: "#FFFFFF",
         }}
       >
         Spot Rate ($)
-      </Typography>
+      </Typography> */}
       <Box sx={{ display: "flex", flexDirection: "column", gap: "2vw" }}>
         {renderSpotSection("gold", goldData)}
         {renderSpotSection("silver", silverData)}
