@@ -46,8 +46,8 @@ const SpotRate = () => {
           justifyContent: "center",
           fontSize: "2vw",
           fontWeight: "bold",
-          color: "#412601",
-          backgroundColor: "#D8BE70",
+          color: "#FFFFFF",
+          backgroundColor: "#2F1B12",
           height: "190px",
           width: "180px",
           borderBottomLeftRadius: "50px",
@@ -66,7 +66,7 @@ const SpotRate = () => {
           display: "flex",
           justifyContent: "space-between",
           backgroundColor: "#F6F5F2",
-          padding: "15px 45px",
+          padding: "15px 30px",
           height: "190px",
           width: "100%",
           borderBottomRightRadius: "50px",
@@ -92,13 +92,13 @@ const SpotRate = () => {
               justifyContent: "center",
               padding: "6px",
               borderRadius: "8px",
-              fontSize: "2vw",
+              fontSize: "2.5vw",
               fontWeight: "bold",
               margin: "1vw 0",
               color: getColor(data.bidChanged),
               backgroundColor: getBackgroundColor(data.bidChanged),
               border: "3px solid #412601",
-              width: "10vw",
+              width: "11.5vw",
             }}
           >
             {data.bid}
@@ -129,13 +129,13 @@ const SpotRate = () => {
               justifyContent: "center",
               padding: "6px",
               borderRadius: "8px",
-              fontSize: "2vw",
+              fontSize: "2.5vw",
               fontWeight: "bold",
               margin: "1vw 0",
               color: getColor(data.bidChanged),
               backgroundColor: getBackgroundColor(data.bidChanged),
               border: "3px solid #412601",
-              width: "10vw",
+              width: "11.5vw",
             }}
           >
             {data.ask}

@@ -195,51 +195,53 @@ function TvScreen() {
         <Grid item xs={12} md={7}>
           {/* Date and Time with Background Box */}
           <Box
-            className="flex items-center justify-between rounded-lg mb-6 p-5"
+            className="flex flex-col items-center rounded-lg mb-6 p-5"
             sx={{
               boxShadow: "0px 5px 10px rgba(200, 200, 205, 0.4)",
               borderRadius: "35px",
             }}
           >
-            <Typography
-              fontWeight="bold"
-              sx={{ color: "#FFFFFF", fontSize: "2vw" }}
-            >
-              {dateTime.toLocaleTimeString()}
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <img src={logo} alt="Logo" className="w-28 h-28 ml-5" />
-              <Typography
-                sx={{ fontSize: "1.5vw", fontWeight: "600", color: "#D8BE70" }}
-              >
-                RAKZ GOLD & DIAMOND
-              </Typography>
-            </Box>
-            <Box className="flex flex-col items-center justify-between mr-8">
+            <Box className="flex items-center justify-between rounded-lg" sx={{width: '100%'}}>
               <Typography
                 fontWeight="bold"
+                sx={{ color: "#FFFFFF", fontSize: "2vw" }}
+              >
+                {dateTime.toLocaleTimeString()}
+              </Typography>
+              <Box
                 sx={{
-                  color: "#FFFFFF",
-                  fontSize: "2vw",
-                  textTransform: "uppercase",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                {getDayName(dateTime)}
-              </Typography>
-              <Typography
-                fontWeight="bold"
-                sx={{ color: "#FFFFFF", fontSize: "1.5vw" }}
-              >
-                {getFormattedDate(dateTime)}
-              </Typography>
+                <img src={logo} alt="Logo" className="w-28 h-28 ml-5" />
+              </Box>
+              <Box className="flex flex-col items-center justify-between mr-8">
+                <Typography
+                  fontWeight="bold"
+                  sx={{
+                    color: "#FFFFFF",
+                    fontSize: "2vw",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {getDayName(dateTime)}
+                </Typography>
+                <Typography
+                  fontWeight="bold"
+                  sx={{ color: "#FFFFFF", fontSize: "1.5vw" }}
+                >
+                  {getFormattedDate(dateTime)}
+                </Typography>
+              </Box>
             </Box>
+            <Typography
+              sx={{ fontSize: "3vw", fontWeight: "600", color: "#D8BE70" }}
+            >
+              RAKZ GOLD & DIAMOND
+            </Typography>
           </Box>
 
           {/* Commodity Table */}
@@ -247,7 +249,7 @@ function TvScreen() {
 
           <Box className="flex flex-col justify-center items-center">
             {/* <img src={aurifyLogo} alt="" className="w-12 h-12 mt-4" /> */}
-            <Typography sx={{ fontSize: "1.5vw", marginTop: "30px" }}>
+            <Typography sx={{ fontSize: "1.5vw", marginTop: "15px" }}>
               Powered by www.aurify.ae
             </Typography>
           </Box>

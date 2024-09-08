@@ -84,12 +84,12 @@ const CommodityGrid = ({ commodities }) => {
             <CardContent>
               <Typography
                 sx={{
-                  backgroundColor: "#D8BE70",
+                  backgroundColor: "#2F1B12",
                   padding: "5px",
                   borderRadius: "40px 40px 0 0",
                   fontWeight: "bold",
                   fontSize: "1.5vw",
-                  color: "#412601",
+                  color: "#FFFFFF",
                 }}
               >
                 {purity} {commodity.metal.toUpperCase()}
