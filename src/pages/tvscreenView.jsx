@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import { Grid, Paper, Typography, Box, useMediaQuery } from "@mui/material";
 import LimitExceededModal from "../components/LimitExceededModal";
 import SpotRate from "../components/SpotRate";
@@ -16,6 +16,9 @@ import {
 import io from "socket.io-client";
 import { useSpotRate } from "../context/SpotRateContext";
 
+const SECRET_KEY = "aurify@123";
+const DEFAULT_SYMBOLS = ["GOLD", "SILVER"];
+
 function TvScreen() {
   const [showLimitModal, setShowLimitModal] = useState(false);
   const [dateTime, setDateTime] = useState(new Date());
@@ -27,6 +30,8 @@ function TvScreen() {
   const [goldAskSpread, setGoldAskSpread] = useState("");
   const [silverBidSpread, setSilverBidSpread] = useState("");
   const [silverAskSpread, setSilverAskSpread] = useState("");
+  const socketRef = useRef(null);
+  const reconnectTimeoutRef = useRef(null);
   const [symbols, setSymbols] = useState(["GOLD", "SILVER"]);
   const [error, setError] = useState(null);
 
@@ -99,54 +104,136 @@ function TvScreen() {
   }, [adminId]);
 
   // Function to Fetch Market Data Using Socket
+  // useEffect(() => {
+  //   if (serverURL) {
+  //     const socket = io(serverURL, {
+  //       query: { secret: import.meta.env.VITE_APP_SOCKET_SECRET_KEY },
+  //       transports: ["websocket"],
+  //       withCredentials: true,
+  //     });
+
+  //     socket.on("connect", () => {
+  //       // console.log("Connected to WebSocket server");
+  //       socket.emit("request-data", symbols);
+  //     });
+
+  //     socket.on("disconnect", () => {
+  //       // console.log("Disconnected from WebSocket server");
+  //     });
+
+  //     socket.on("market-data", (data) => {
+  //       if (data && data.symbol) {
+  //         setMarketData((prevData) => ({
+  //           ...prevData,
+  //           [data.symbol]: {
+  //             ...prevData[data.symbol],
+  //             ...data,
+  //             bidChanged:
+  //               prevData[data.symbol] && data.bid !== prevData[data.symbol].bid
+  //                 ? data.bid > prevData[data.symbol].bid
+  //                   ? "up"
+  //                   : "down"
+  //                 : null,
+  //           },
+  //         }));
+  //       } else {
+  //         console.warn("Received malformed market data:", data);
+  //       }
+  //     });
+
+  //     socket.on("error", (error) => {
+  //       // console.error("WebSocket error:", error);
+  //       setError("An error occurred while receiving data");
+  //     });
+
+  //     // Cleanup function to disconnect the socket
+  //     return () => {
+  //       socket.disconnect();
+  //     };
+  //   }
+  // }, [serverURL, symbols]);
+
+  // Function to connect to WebSocket after server URL is fetched
+  const connectSocket = useCallback(() => {
+    console.log("count");
+    if (!serverURL) return;
+
+    console.log("Connecting to WebSocket server:", serverURL);
+
+    if (socketRef.current) {
+      socketRef.current.disconnect();
+    }
+
+    socketRef.current = io(serverURL, {
+      query: { secret: SECRET_KEY },
+      transports: ["websocket"],
+      withCredentials: true,
+    });
+
+    socketRef.current.on("connect", () => {
+      console.log("Connected to WebSocket server");
+      socketRef.current.emit("request-data", symbols);
+    });
+
+    socketRef.current.on("disconnect", () => {
+      console.log("Disconnected from WebSocket server");
+      // Attempt to reconnect
+      if (reconnectTimeoutRef.current) {
+        clearTimeout(reconnectTimeoutRef.current);
+      }
+      reconnectTimeoutRef.current = setInterval(connectSocket, 5000);
+    });
+
+    socketRef.current.on("market-data", (data) => {
+      // console.log(data);
+
+      if (data && data.symbol) {
+        // Update the market data state by merging with previous data
+        setMarketData((prevData) => ({
+          ...prevData,
+          [data.symbol]: {
+            ...prevData[data.symbol], // Keep the existing data for the symbol
+            ...data, // Overwrite with new data from the event
+            bidChanged:
+              prevData[data.symbol] && data.bid !== prevData[data.symbol].bid
+                ? data.bid > prevData[data.symbol].bid
+                  ? "up"
+                  : "down"
+                : null, // Track bid change direction
+          },
+        }));
+      } else {
+        console.warn("Received malformed market data:", data);
+      }
+    });
+
+    socketRef.current.on("connect_error", (error) => {
+      console.error("WebSocket connection error:", error);
+    });
+  }, [serverURL, symbols]);
+
   useEffect(() => {
     if (serverURL) {
-      const socket = io(serverURL, {
-        query: { secret: import.meta.env.VITE_APP_SOCKET_SECRET_KEY },
-        transports: ["websocket"],
-        withCredentials: true,
-      });
-
-      socket.on("connect", () => {
-        // console.log("Connected to WebSocket server");
-        socket.emit("request-data", symbols);
-      });
-
-      socket.on("disconnect", () => {
-        // console.log("Disconnected from WebSocket server");
-      });
-
-      socket.on("market-data", (data) => {
-        if (data && data.symbol) {
-          setMarketData((prevData) => ({
-            ...prevData,
-            [data.symbol]: {
-              ...prevData[data.symbol],
-              ...data,
-              bidChanged:
-                prevData[data.symbol] && data.bid !== prevData[data.symbol].bid
-                  ? data.bid > prevData[data.symbol].bid
-                    ? "up"
-                    : "down"
-                  : null,
-            },
-          }));
-        } else {
-          console.warn("Received malformed market data:", data);
-        }
-      });
-
-      socket.on("error", (error) => {
-        // console.error("WebSocket error:", error);
-        setError("An error occurred while receiving data");
-      });
-
-      // Cleanup function to disconnect the socket
-      return () => {
-        socket.disconnect();
-      };
+      connectSocket();
     }
-  }, [serverURL, symbols]);
+
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
+      if (reconnectTimeoutRef.current) {
+        clearTimeout(reconnectTimeoutRef.current);
+      }
+    };
+  }, [connectSocket]);
+
+  const refreshData = useCallback(() => {
+    if (socketRef.current && socketRef.current.connected) {
+      socketRef.current.emit("request-data", symbols);
+    } else {
+      connectSocket();
+    }
+  }, [symbols, connectSocket]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -201,7 +288,10 @@ function TvScreen() {
               borderRadius: "35px",
             }}
           >
-            <Box className="flex items-center justify-between rounded-lg" sx={{width: '100%'}}>
+            <Box
+              className="flex items-center justify-between rounded-lg"
+              sx={{ width: "100%" }}
+            >
               <Typography
                 fontWeight="bold"
                 sx={{ color: "#FFFFFF", fontSize: "2vw" }}
